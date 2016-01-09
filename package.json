@@ -1,0 +1,24 @@
+{
+  "name": "magicmirror",
+  "version": "0.1.0",
+  "description": "node.js port of Magic Mirror project",
+  "main": "nodeserver.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MichMich/MagicMirror.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MichMich/MagicMirror/issues"
+  },
+  "homepage": "https://github.com/MichMich/MagicMirror#readme",
+  "dependencies": {
+    "commander": "^2.9.0",
+    "express": "^4.13.3",
+    "git-rev": "^0.2.1"
+  }
+}

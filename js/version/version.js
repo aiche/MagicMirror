@@ -1,6 +1,7 @@
 var version = {
 	updateInterval: 600000,
-	intervalId: null
+	intervalId: null,
+	lastHash: null
 }
 
 /**
@@ -10,16 +11,20 @@ version.checkVersion = function () {
 
 	$.ajax({
 		type: 'GET',
-		url: 'controllers/hash.php',
+		url: 'api/git',
 		success: function (data) {
-			// The githash variable is located in index.php
-			if (data && data.gitHash !== gitHash) {
-				window.location.reload();
-				window.location.href = window.location.href;
+			if (data && data.gitHash) {
+				// if we have no hash yet, set it now
+				if (!this.lastHash) {
+					this.lastHash = data.gitHash;
+				}
+				if (this.lastHash !== gitHash) {
+					window.location.reload();
+					window.location.href = window.location.href;
+				}
 			}
 		},
 		error: function () {
-
 		}
 	});
 

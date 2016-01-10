@@ -4,33 +4,39 @@ var version = {
 	lastHash: null
 }
 
-/**
- * Checks the version and refreshes the page if a new version has been pulled
- */
-version.checkVersion = function () {
-
+version.requestVersion = function (handler) {
 	$.ajax({
 		type: 'GET',
 		url: 'api/git',
 		success: function (data) {
 			if (data && data.gitHash) {
-				// if we have no hash yet, set it now
-				if (!this.lastHash) {
-					this.lastHash = data.gitHash;
-				}
-				if (this.lastHash !== gitHash) {
-					window.location.reload();
-					window.location.href = window.location.href;
-				}
+				handler(data.gitHash);
 			}
 		},
 		error: function () {
 		}
 	});
+};
 
+/**
+ * Checks the version and refreshes the page if a new version has been pulled
+ */
+version.checkVersion = function () {
+	var that = this;
+	this.requestVersion(function(gitHash) {
+		if (that.lastHash !== gitHash) {
+			window.location.reload();
+			window.location.href = window.location.href;
+		}
+	});
 }
 
 version.init = function () {
+
+	var that = this;
+	this.requestVersion(function(gitHash) {
+		that.lastHash = gitHash;
+	});
 
 	this.intervalId = setInterval(function () {
 		this.checkVersion();

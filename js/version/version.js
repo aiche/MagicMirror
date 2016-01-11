@@ -1,5 +1,5 @@
 var version = {
-	updateInterval: 600000,
+	updateInterval: 100000,
 	intervalId: null,
 	lastHash: null
 }
@@ -8,7 +8,8 @@ version.requestVersion = function (handler) {
 	$.ajax({
 		type: 'GET',
 		url: 'api/git',
-		success: function (data) {
+		success: function (res) {
+			var data = JSON.parse(res);
 			if (data && data.gitHash) {
 				handler(data.gitHash);
 			}
